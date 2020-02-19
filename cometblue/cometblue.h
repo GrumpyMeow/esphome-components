@@ -3,7 +3,6 @@
 #include "esphome/core/component.h"
 #include "esphome/components/sensor/sensor.h"
 #include "esphome/components/climate/climate.h"
-#include "esphome/components/time/real_time_clock.h"
 
 
 #ifdef ARDUINO_ARCH_ESP32
@@ -42,7 +41,6 @@ public:
   void set_address(uint64_t new_address) { address = new_address; }
   void set_pin(uint32_t new_pin) { pin = new_pin; }
   void set_temperature_offset(float offset) { temperature_offset = offset; }
-  void set_time(esphome::time::RealTimeClock *clock) { time_clock = clock; }
   void set_window_open_config(int8_t sensitivity, int8_t minutes) { window_open_sensitivity = sensitivity; window_open_minutes = minutes; }
 
 public:
@@ -60,7 +58,6 @@ private:
   void control_retry(esphome::climate::ClimateCall call, int retry);
   
   bool send_pincode();
-  bool get_time();
   bool get_temperature();
   bool get_flags();
 
@@ -80,7 +77,6 @@ private:
   float temperature_offset;
   uint8_t window_open_minutes;
   uint8_t window_open_sensitivity;
-  esphome::time::RealTimeClock *time_clock{nullptr};
   std::unique_ptr<ESP32BLEClient> ble_client;  
 };
 

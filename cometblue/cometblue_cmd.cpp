@@ -119,11 +119,6 @@ bool CometBlueClimate::send_pincode() {
   return true;
 }
 
-bool CometBlueClimate::get_time() {
-  // Not yet implemented
-  return false;
-}
-
 bool CometBlueClimate::get_flags() {
   if (read_value(PROP_FLAGS_CHARACTERISTIC_UUID)) {
     uint8_t status = ble_client->readresult_value[0];
