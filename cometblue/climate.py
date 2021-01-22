@@ -7,7 +7,6 @@ from esphome.const import CONF_ID, CONF_TIME_ID, CONF_MAC_ADDRESS, \
     
 ESP_PLATFORMS = [ESP_PLATFORM_ESP32]
 CONFLICTS_WITH = ['esp32_ble_tracker']
-DEPENDENCIES = ['time']
 AUTO_LOAD = ['sensor', 'esp32_ble_clients']
 
 CONF_TEMPERATURE_OFFSET = 'temperature_offset'
@@ -19,7 +18,6 @@ CometBlueClimate = cg.global_ns.class_('CometBlueClimate', climate.Climate, cg.P
 
 CONFIG_SCHEMA = cv.All(climate.CLIMATE_SCHEMA.extend({
     cv.GenerateID(): cv.declare_id(CometBlueClimate),
-    cv.GenerateID(CONF_TIME_ID): cv.use_id(time.RealTimeClock),
     cv.Required(CONF_MAC_ADDRESS): cv.mac_address,
     cv.Optional(CONF_PIN, default=-1): cv.int_range(min_included=0, max_included=9999999),
     cv.Optional(CONF_TEMPERATURE_OFFSET, default=0): cv.float_range(min_included=-3, max_included=+3),
@@ -38,5 +36,3 @@ def to_code(config):
     cg.add(var.set_temperature_offset(config[CONF_TEMPERATURE_OFFSET]))
     cg.add(var.set_window_open_config(config[CONF_WINDOW_OPEN_SENSITIVITY],config[CONF_WINDOW_OPEN_MINUTES] ))
 
-    time_ = yield cg.get_variable(config[CONF_TIME_ID])
-    cg.add(var.set_time(time_))

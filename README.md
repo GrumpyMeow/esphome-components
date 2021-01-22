@@ -248,10 +248,6 @@ api:
 
 ota:
 
-time:
-  - platform: sntp
-    id: sntp_time
-
 climate:
   - platform: cometblue
     pin: 0000
